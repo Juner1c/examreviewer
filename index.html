@@ -6,142 +6,105 @@
     <title>Input Checker with Suggestions</title>
     <style>
         body {
-    font-family: Arial, sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    background-color: #f0f0f0;
-    margin: 0;
-    padding: 10px;
-}
-
-.container {
-    width: 100%;
-    max-width: 400px;
-    background: #fff;
-    padding: 30px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
-button {
-    padding: 10px;
-    margin: 8px 0;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    width: 100%;
-    font-size: 1rem;
-}
-input {
-    width: 100%;
-    padding: 12px;
-    margin: 5px 0;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 1rem;
-    box-sizing: border-box;
-}
-
-button {
-    background-color: #4CAF50;
-    color: white;
-    cursor: pointer;
-}
-
-.chck:hover {
-    background-color: #45a049;
-}
-
-.result {
-    margin-top: 10px;
-    font-weight: bold;
-}
-
-.next-btn, .show-answer-btn {
-    display: none;
-    margin-top: 15px;
-    background-color: #6740f3;
-    color: white;
-}
-
-.next-btn:hover {
-    background-color: #5c37e0;
-}
-
-.show-answer-btn {
-    background-color: #f34040;
-}
-
-.show-answer-btn:hover {
-    background-color: #e03737;
-}
-
-h2 {
-    margin-bottom: 30px;
-    font-size: 1.5rem;
-}
-
-a {
-    color: blue;
-}
-
-h6 {
-    margin: 0;
-    text-align: left;
-    color: red;
-    font-size: 14px;
-}
-
-
-@media (max-width: 768px) {
-    .container {
-        width: 95%;
-        max-width: 90%;
-        padding: 15px;
-    }
-
-    h2 {
-        font-size: 1.3rem;
-    }
-
-    input, button {
-        font-size: 0.9rem;
-        padding: 10px;
-    }
-}
-
-@media (max-width: 480px) {
-    h2 {
-        font-size: 1.2rem;
-    }
-
-    input, button {
-        font-size: 0.85rem;
-        padding: 8px;
-    }
-
-    h6 {
-        font-size: 12px;
-    }
-}
-
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            margin: 0;
+        }
+        .container {
+            width: 90%;
+            max-width: 400px;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        input, button {
+            width: 100%;
+            padding: 12px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1rem;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+        }
+        .chck:hover {
+            background-color: #45a049;
+        }
+        .result {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        .next-btn, .show-answer-btn, .retry-btn {
+            display: none;
+            margin-top: 20px;
+            padding: 12px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .next-btn {
+            background-color: #6740f3;
+        }
+        .next-btn:hover {
+            background-color: #5c37e0;
+        }
+        .show-answer-btn {
+            background-color: #f34040;
+            color: white;
+        }
+        .show-answer-btn:hover {
+            background-color: #e03737;
+        }
+        .retry-btn {
+            background-color: #ffa500;
+        }
+        .retry-btn:hover {
+            background-color: #e69500;
+        }
+        h2 {
+            margin-bottom: 20px;
+            font-size: 1.7rem;
+        }
+        .question-label {
+            text-align: left;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        a {
+            color: blue;
+        }
+        h6 {
+            margin: 0;
+            text-align: left;
+            margin-left: 10px;
+            color: red;
+            font-size: 15px;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h4>Follow me on my Facebook <a href="https://www.facebook.com/juner1c/">juner1c</a></h4>
+        <h4>Follow me on my Facebook <a href="https://www.facebook.com/juner1c/" target="_blank">juner1c</a></h4>
         <h2>Review QUANTITATIVE ANSWER</h2>
-
-        <h6>NOTE: Type the first word of the answer only</h6>
+        <div class="question-label" id="questionLabel"></div>
+        <h6>NOTE: type the first word or the answer only</h6>
         <input type="text" id="userInput" placeholder="Enter answer...">
         <button class="chck" onclick="checkInput()">Check</button>
         <button class="next-btn" id="nextBtn" onclick="nextQuestion()">Next Question</button>
         <button class="show-answer-btn" id="showAnswerBtn" onclick="showCorrectAnswer()">Show Correct Answer</button>
+        <button class="retry-btn" id="retryBtn" onclick="retryQuestions()">Retry</button>
         <div class="result" id="result"></div>
         <div class="result" id="currentIndexDisplay"></div>
     </div>
@@ -156,11 +119,24 @@ h6 {
             'Chi', 'Nonparametric', 'One', 'Rank', 'Paired'
         ];
 
-        let currentIndex = 1;
-        let attemptCount = 0;
+        const questions = [
+            'Descriptive Statistic', 'Affected by outliers', 'Type of graph', 'Two modes',
+            'Standard deviation', 'Sum of all data/Number', 'Middle value', 
+            'Difference between the highest/lowest', 'Sotho percentile', 'Normal distribution',
+            'Nominal data', 'Ordinal level of measurement', 'Meaningful multiplication and division',
+            'Student grade', 'Temperature celsius', 'Level of measurement', 'Has zero point',
+            'Light scle', 'Hair color', 'Difference Interval and Ratio', 'Parametrical test',
+            'Parametrical test example', 'Mann withy U', 'Means of 3 or more group', 'Non parametric',
+            'Twi categorial', 'Highly squid', 'Keuskal-wallis', 'Characteristic of none parametric test',
+            'willcoxon'
+        ];
+
+        let currentIndex = 0;
+        let wrongAttempts = 0;
 
         function updateCurrentIndexDisplay() {
-            document.getElementById('currentIndexDisplay').textContent = `Question number: ${currentIndex}`;
+            document.getElementById('currentIndexDisplay').textContent = `Question number: ${currentIndex + 1}`;
+            document.getElementById('questionLabel').textContent = `Question: ${questions[currentIndex]}`;
         }
 
         function checkInput() {
@@ -169,20 +145,20 @@ h6 {
             const resultDiv = document.getElementById('result');
             const nextBtn = document.getElementById('nextBtn');
             const showAnswerBtn = document.getElementById('showAnswerBtn');
-            const currentTerm = validValues[currentIndex - 1].toLowerCase();
+            const currentAnswer = validValues[currentIndex].toLowerCase();
 
-            if (input === currentTerm) {
+            if (input === currentAnswer) {
                 resultDiv.textContent = `Correct! Click 'Next Question' to proceed.`;
                 resultDiv.style.color = 'green';
                 nextBtn.style.display = 'inline-block';
                 showAnswerBtn.style.display = 'none';
-                attemptCount = 0;
+                wrongAttempts = 0;
             } else {
-                attemptCount++;
+                wrongAttempts++;
                 resultDiv.textContent = `Incorrect. Try again.`;
                 resultDiv.style.color = 'red';
                 nextBtn.style.display = 'none';
-                if (attemptCount >= 2) {
+                if (wrongAttempts >= 2) {
                     showAnswerBtn.style.display = 'inline-block';
                 }
             }
@@ -190,33 +166,37 @@ h6 {
 
         function nextQuestion() {
             currentIndex++;
+            wrongAttempts = 0;
             const resultDiv = document.getElementById('result');
             const nextBtn = document.getElementById('nextBtn');
             const showAnswerBtn = document.getElementById('showAnswerBtn');
             const userInput = document.getElementById('userInput');
 
-            if (currentIndex > validValues.length) {
-                resultDiv.textContent = "All terms have been correctly entered!";
+            if (currentIndex >= questions.length) {
+                resultDiv.textContent = "All questions have been answered!";
                 nextBtn.style.display = 'none';
-                showAnswerBtn.style.display = 'none';
                 userInput.style.display = 'none';
+                document.getElementById('retryBtn').style.display = 'inline-block';
             } else {
                 resultDiv.textContent = "Enter the next term.";
                 nextBtn.style.display = 'none';
                 showAnswerBtn.style.display = 'none';
                 userInput.value = '';
                 userInput.focus();
-                attemptCount = 0;
+                updateCurrentIndexDisplay();
             }
-            updateCurrentIndexDisplay();
         }
 
         function showCorrectAnswer() {
-            const resultDiv = document.getElementById('result');
-            const showAnswerBtn = document.getElementById('showAnswerBtn');
-            resultDiv.textContent = `The correct answer is: '${validValues[currentIndex - 1]}'`;
-            resultDiv.style.color = 'orange';
-            showAnswerBtn.style.display = 'none';
+            document.getElementById('result').textContent = `Correct Answer: ${validValues[currentIndex]}`;
+        }
+
+        function retryQuestions() {
+            currentIndex = 0;
+            document.getElementById('userInput').style.display = 'block';
+            document.getElementById('retryBtn').style.display = 'none';
+            document.getElementById('result').textContent = '';
+            updateCurrentIndexDisplay();
         }
 
         updateCurrentIndexDisplay();
