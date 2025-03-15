@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Input Checker with Suggestions</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            margin: 0;
+        }
+        .container {
+            width: 50%;
+            height: 45%;
+            background: #fff;
+            padding: 0px 10px 20px 10px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        input, button {
+            padding: 10px;
+            margin: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+        }
+        .chck:hover {
+            background-color: #45a049;
+        }
+        .result {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        .next-btn {
+            display: none;
+            margin-top: 20px;
+            background-color: #6740f3;
+        }
+        .next-btn:hover {
+            background-color: #5c37e0;
+        }
+        .show-answer-btn {
+            display: none;
+            margin-top: 10px;
+            background-color: #f34040;
+            color: white;
+        }
+        .show-answer-btn:hover {
+            background-color: #e03737;
+        }
+        h2{
+            margin-bottom: 50px;
+            font-size: 1.7rem;
+        }
+        a{
+            color: blue;
+        }
+        h6{
+            margin: 0;
+            text-align: left;
+            margin-left: 10px;
+            color: red;
+            font-size: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h4>Follow me on my Facebook <a href="https://www.facebook.com/juner1c/">juner1c</a></h4>
+        <h2>Review QUANTITATIVE ANSWER</h2>
+
+        <h6>NOTE: Type the first word of the answer only</h6>
+        <input type="text" id="userInput" placeholder="Enter answer...">
+        <button class="chck" onclick="checkInput()">Check</button>
+        <button class="next-btn" id="nextBtn" onclick="nextQuestion()">Next Question</button>
+        <button class="show-answer-btn" id="showAnswerBtn" onclick="showCorrectAnswer()">Show Correct Answer</button>
+        <div class="result" id="result"></div>
+        <div class="result" id="currentIndexDisplay"></div>
+    </div>
+
+    <script>
+        const validValues = [
+            'Summarize', 'Mean', 'Histogram', 'Binomial', 'Spread', 
+            'Mean', 'Median', 'Range', 'Median', 'Symmetrical', 
+            'Gender', 'Categories', 'Ratio', 'Ordinal', 'Interval', 
+            'Nominal', 'Ratio', 'Ordinal', 'Nominal', 'Ratio', 
+            'Normally', 'T-test', 'Independent', 'Anova', 'Data', 
+            'Chi', 'Nonparametric', 'One', 'Rank', 'Paired'
+        ];
+
+        let currentIndex = 1;
+        let attemptCount = 0;
+
+        function updateCurrentIndexDisplay() {
+            document.getElementById('currentIndexDisplay').textContent = `Question number: ${currentIndex}`;
+        }
+
+        function checkInput() {
+            const inputField = document.getElementById('userInput');
+            const input = inputField.value.trim().toLowerCase();
+            const resultDiv = document.getElementById('result');
+            const nextBtn = document.getElementById('nextBtn');
+            const showAnswerBtn = document.getElementById('showAnswerBtn');
+            const currentTerm = validValues[currentIndex - 1].toLowerCase();
+
+            if (input === currentTerm) {
+                resultDiv.textContent = `Correct! Click 'Next Question' to proceed.`;
+                resultDiv.style.color = 'green';
+                nextBtn.style.display = 'inline-block';
+                showAnswerBtn.style.display = 'none';
+                attemptCount = 0;
+            } else {
+                attemptCount++;
+                resultDiv.textContent = `Incorrect. Try again.`;
+                resultDiv.style.color = 'red';
+                nextBtn.style.display = 'none';
+                if (attemptCount >= 2) {
+                    showAnswerBtn.style.display = 'inline-block';
+                }
+            }
+        }
+
+        function nextQuestion() {
+            currentIndex++;
+            const resultDiv = document.getElementById('result');
+            const nextBtn = document.getElementById('nextBtn');
+            const showAnswerBtn = document.getElementById('showAnswerBtn');
+            const userInput = document.getElementById('userInput');
+
+            if (currentIndex > validValues.length) {
+                resultDiv.textContent = "All terms have been correctly entered!";
+                nextBtn.style.display = 'none';
+                showAnswerBtn.style.display = 'none';
+                userInput.style.display = 'none';
+            } else {
+                resultDiv.textContent = "Enter the next term.";
+                nextBtn.style.display = 'none';
+                showAnswerBtn.style.display = 'none';
+                userInput.value = '';
+                userInput.focus();
+                attemptCount = 0;
+            }
+            updateCurrentIndexDisplay();
+        }
+
+        function showCorrectAnswer() {
+            const resultDiv = document.getElementById('result');
+            const showAnswerBtn = document.getElementById('showAnswerBtn');
+            resultDiv.textContent = `The correct answer is: '${validValues[currentIndex - 1]}'`;
+            resultDiv.style.color = 'orange';
+            showAnswerBtn.style.display = 'none';
+        }
+
+        updateCurrentIndexDisplay();
+    </script>
+</body>
+</html>
